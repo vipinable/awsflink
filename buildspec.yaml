@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+  variables:
+    JAVA_HOME: "/usr/lib/jvm/java-8-openjdk-amd64"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20.x
+      python: 3.x
+    commands:
+      - echo Entered the install phase...
+      - npm install -g aws-cdk@2.1003.0
+      - npm install 
+    finally:
+      - echo This always runs even if the update or install command fails 
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase...
+    finally:
+      - echo This always runs even if the login command fails 
+  build:
+    commands:
+      - echo Entered the build phase...
+      - echo Build started on `date`
+      - cdk --version
+      - cdk synth
+      - cdk deploy 
+    finally:
+      - echo This always runs even if the install command fails
+  post_build:
+    commands:
+      - echo Entered the post_build phase...
+      - echo Build completed on `date`
